@@ -1,7 +1,22 @@
+# Sample config file
+# Add/remove and change properties as needed
+# There's a minimum of 1 agency and recommended maximum of 99
+# (beyond 99 there may be issues although it's very unlikely)
+
 [[agency]]
 id = 1
 name = 'Massachusetts Bay Transportation Authority'
-realtimeUrl = 'http://127.0.0.1/realtime'
-dbUser = 'TCUser'
-dbPassword = 'tc_password123'
-dbHost = 'localhost'
+realtimeUrl = 'https://cdn.mbta.com/realtime/VehiclePositions.pb'
+gtfsUrl = 'https://cdn.mbta.com/MBTA_GTFS.zip'
+
+[[agency]]
+id = 2
+name = 'Halifax Transit'
+realtimeUrl = 'http://gtfs.halifax.ca/realtime/Vehicle/VehiclePositions.pb'
+gtfsUrl = 'http://gtfs.halifax.ca/static/google_transit.zip'
+
+[[agency]]
+id = 3
+name = 'Hillsborough Area Regional Transit'
+realtimeUrl = 'http://api.tampa.onebusaway.org:8088/vehicle-positions'
+gtfsUrl = 'http://www.gohart.org/google/google_transit.zip'
