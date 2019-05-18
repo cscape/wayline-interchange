@@ -23,8 +23,8 @@ process.argv.forEach(a => {
 const tomlConfig = fs.readFileSync(path.resolve(__dirname, 'config.toml'), 'utf8')
 const data = toml.parse(tomlConfig)
 
-const files = data.agency.map(agency =>
-  doEverything(agency.id, agency.realtimeUrl, dbUser, dbPass, dbHost)
+const files = data.agency.map((agency, i) =>
+  doEverything(i !== 0, agency.id, agency.realtimeUrl, dbUser, dbPass, dbHost)
 ).join('\n')
 
 const agencies = data.agency.map(agency => {
