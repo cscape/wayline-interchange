@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-node GetAgency.js $@
+node lib/GetAgency.js $@

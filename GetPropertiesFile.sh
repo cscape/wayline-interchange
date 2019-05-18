@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-node GetPropertiesFile.js $@
+node lib/GetPropertiesFile.js $@
