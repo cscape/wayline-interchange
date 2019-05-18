@@ -16,7 +16,7 @@ const toml = require('toml')
 const { agencyIdFromNumber } = require('./lib/agency.properties')
 
 const throwerr = d => {
-  console.error(d)
+  console.error('ERROR: ' + d)
   process.exit(Math.round(Math.random * 100) + 1)
 }
 
