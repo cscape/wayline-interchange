@@ -1,0 +1,7 @@
+[[agency]]
+id = 1
+name = 'Massachusetts Bay Transportation Authority'
+realtimeUrl = 'http://127.0.0.1/realtime'
+dbUser = 'TCUser'
+dbPassword = 'tc_password123'
+dbHost = 'localhost'
