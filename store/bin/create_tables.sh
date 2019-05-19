@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo 'THETRANSITCLOCK DOCKER: Create Tables'
 
-# Env variable PGPASSWORD, PGUSERNAME, AGENCYID myst be set
+# Env variable PGPASSWORD, PGUSERNAME, AGENCYID must be set
 
 java -cp /usr/local/transitclock/Core.jar org.transitclock.applications.SchemaGenerator \
   -p org.transitclock.db.structs \

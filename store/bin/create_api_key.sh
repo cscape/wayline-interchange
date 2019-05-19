@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-echo 'THETRANSITCLOCK DOCKER: Create API key for $TRANSITCLOCK_AGENCY_PROPERTIES_FILE'
+echo 'THETRANSITCLOCK DOCKER: Create API key'
 
-java -jar CreateAPIKey.jar \
-  -config $TRANSITCLOCK_AGENCY_PROPERTIES_FILE \
+java \
+  -jar CreateAPIKey.jar \
   -description "Connector" \
   -email "alex@example.com" \
   -name "Application" \

@@ -33,20 +33,8 @@ docker run \
   --link icdb:postgres \
   -e PGPASSWORD=$PGPASSWORD \
   -e PGUSERNAME=$PGUSERNAME \
-  -e AGENCYID=$p \
   transitclock-server \
   internalsetup.sh
-
-# CONTAINER: 	icserver
-# DESCRIPTION:	Create the agency
-docker run \
-  --name icserver \
-  --rm \
-  --link icdb:postgres \
-  -e PGPASSWORD=$PGPASSWORD \
-  -e PGUSERNAME=$PGUSERNAME
-  transitclock-server \
-  create_webagency.sh
 
 # CONTAINER: 	icserver
 # DESCRIPTION:	Start the server
