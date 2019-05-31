@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
-echo 'THETRANSITCLOCK DOCKER: Create API key'
+echo 'INTERCHANGE DOCKER: Creating API key'
+
+# Supplying a config file is practically useless since
+# it's only read into memory and then discarded by the Jar.
 
 java \
-  -jar CreateAPIKey.jar \
-  -description "Connector" \
-  -email "alex@example.com" \
-  -name "Application" \
-  -phone "123456" \
-  -url "https://wayline.co"
+  -cp /usr/local/transitclock/Core.jar \
+  org.transitclock.applications.CreateAPIKey \
+  -c $TRANSITCLOCK_AGENCY_PROPERTIES_FILE \
+  -d "Connector" \
+  -e "alex@example.com" \
+  -n "Application" \
+  -p "123456" \
+  -u "https://wayline.co"
+

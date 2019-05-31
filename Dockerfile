@@ -13,7 +13,8 @@ ARG TRANSITCLOCK_BRANCH="develop"
 # Install necessary software
   RUN apt-get update
   RUN apt-get install -y postgresql-client
-  RUN apt-get install -y git-core
+  RUN apt-get install -y wget
+  RUN apt-get install -y openjdk-8-jdk
   RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
   RUN apt-get install -y nodejs
   RUN wget http://stedolan.github.io/jq/download/linux64/jq
@@ -47,7 +48,13 @@ ARG TRANSITCLOCK_BRANCH="develop"
 
 # Fetch latest TransitClock release and store the jars
   WORKDIR /usr/local/transitclock
-  RUN curl -s https://api.github.com/repos/TheTransitClock/transitime/releases/latest | jq -r ".assets[].browser_download_url" | grep 'Core.jar\|api.war\|web.war\|CreateAPIKey.jar\|GtfsFileProcessor.jar\|CreateWebAgency.jar' | xargs -L1 wget
+#  RUN curl -s https://api.github.com/repos/TheTransitClock/transitime/releases/latest | jq -r ".assets[].browser_download_url" | grep 'Core.jar\|api.war\|web.war\|CreateAPIKey.jar\|GtfsFileProcessor.jar\|CreateWebAgency.jar' | xargs -L1 wget
+  RUN wget http://192.168.29.200:5000/Core.jar
+  RUN wget http://192.168.29.200:5000/api.war
+  RUN wget http://192.168.29.200:5000/web.war
+  RUN wget http://192.168.29.200:5000/CreateAPIKey.jar
+  RUN wget http://192.168.29.200:5000/GtfsFileProcessor.jar
+  RUN wget http://192.168.29.200:5000/CreateWebAgency.jar
 
 # Move API + Web apps which talks to core
   RUN mv api.war  /usr/local/tomcat/webapps
@@ -63,7 +70,7 @@ ARG TRANSITCLOCK_BRANCH="develop"
   ADD store/bin/start_transitclock.sh /usr/local/transitclock/bin/start_transitclock.sh
   ADD store/bin/get_api_key.sh /usr/local/transitclock/bin/get_api_key.sh
   ADD store/bin/update_traveltimes.sh /usr/local/transitclock/bin/update_traveltimes.sh
-  ADD store/bin/set_config.sh /usr/local/transitclock/bin/set_config.sh
+  ADD store/bin/internalsetup.sh /usr/local/transitclock/bin/internalsetup.sh
   ENV PATH="/usr/local/transitclock/bin:${PATH}"
   ADD store/hibernate.cfg.xml /usr/local/transitclock/config/hibernate.cfg.xml
   ADD store/named_queries.hbm.xml /usr/local/transitclock/config/named_queries.hbm.xml
@@ -73,12 +80,15 @@ ARG TRANSITCLOCK_BRANCH="develop"
   RUN chmod 777 /usr/local/transitclock/bin/*.sh
 
 # Required for Wayline Interchange tools
+  WORKDIR /
   RUN mkdir /usr/local/interchange
-  ADD ./ /usr/local/interchange
-  RUN npm install /usr/local/interchange
+  ADD . /usr/local/interchange
+  WORKDIR /usr/local/interchange
+  RUN npm install
   RUN sed -i 's/\r//' /usr/local/interchange/*.sh
   RUN chmod 777 /usr/local/interchange/*.sh
   ENV PATH="${PATH}:/usr/local/interchange"
+  WORKDIR /usr/local/transitclock
 
 # Open port where the Tomcat server is hosted on
   EXPOSE 8080
