@@ -12,13 +12,13 @@ rm -rf node_modules/
 echo "Installing fresh NPM dependencies"
 npm install
 echo "Building agencies using buildscript and database host" $POSTGRES_PORT_5432_TCP_ADDR
-node /usr/local/interchange/node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}:${POSTGRES_PORT_5432_TCP_PORT}"
+node /usr/local/interchange/node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}"
 echo "Finished building agencies"
 export TRANSITCLOCK_ALLPROPERTIES=$(node /usr/local/interchange/lib/GetConfigs.js -interchangedir=/usr/local/interchange/ic/)
 echo "TransitClock configFiles set to" $TRANSITCLOCK_ALLPROPERTIES
 
 echo "Now running generator for all agencies"
-node /usr/local/interchange/node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}:${POSTGRES_PORT_5432_TCP_PORT}" -nobuild=true | while read p
+node /usr/local/interchange/node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}" -nobuild=true | while read p
 do
   export AGENCYID="${p}"
   export AGENCYNAME=$(node /usr/local/interchange/lib/GetAgency.js -id="${p}" -get=name -config=/usr/local/interchange/config.toml)
