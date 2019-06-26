@@ -11,14 +11,6 @@ java \
   -Dtransitclock.core.agencyId="${AGENCYID}" \
   -Dtransitclock.configFiles=$TRANSITCLOCK_AGENCY_PROPERTIES_FILE \
   -Dtransitclock.logging.dir=/usr/local/transitclock/logs/ \
-  -Dtransitclock.db.dbName="TC_AGENCY_${AGENCYID}" \
-  -Dtransitclock.hibernate.configFile=/usr/local/transitclock/config/hibernate.cfg.xml \
-  -Dtransitclock.db.dbHost=$POSTGRES_PORT_5432_TCP_ADDR:$POSTGRES_PORT_5432_TCP_PORT \
-  -Dtransitclock.db.dbUserName=$PGUSERNAME \
-  -Dtransitclock.db.dbPassword=$PGPASSWORD \
-  -Dtransitclock.db.dbType=postgresql \
-  -Dhibernate.connection.username="${PGUSERNAME}" \
-  -Dhibernate.connection.password="${PGPASSWORD}" \
   -cp /usr/local/transitclock/Core.jar \
   org.transitclock.applications.GtfsFileProcessor \
   -c "${TRANSITCLOCK_AGENCY_PROPERTIES_FILE}" \
