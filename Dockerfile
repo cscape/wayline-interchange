@@ -84,7 +84,8 @@ ARG TRANSITCLOCK_BRANCH="develop"
   RUN mkdir /usr/local/interchange
   ADD . /usr/local/interchange
   WORKDIR /usr/local/interchange
-  RUN npm install
+  RUN rm -rf ic/
+  RUN rm -rf node_modules/
   RUN sed -i 's/\r//' /usr/local/interchange/*.sh
   RUN chmod 777 /usr/local/interchange/*.sh
   ENV PATH="${PATH}:/usr/local/interchange"
