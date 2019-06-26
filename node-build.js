@@ -7,7 +7,7 @@ const { doEverything, agencyIdFromNumber } = require('./lib/agency.properties')
 
 // Setting defaults,
 // PLEASE explicitly pass the -user, -pass, and -host parameters when calling this script!
-let dbUser = process.env.PGPUSERNAME || 'TCUser'
+let dbUser = process.env.PGUSERNAME || 'TCUser'
 let dbPass = process.env.PGPASSWORD || 'sample_interchangePassword145'
 let dbHost = '127.0.0.1:5432'
 let noBuild = false
