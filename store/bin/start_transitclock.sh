@@ -23,13 +23,15 @@ rmiregistry &
 #echo "Java environment options set as: ${JAVA_OPTS}"
 
 echo "Fetching agencies"
-node /usr/local/interchange/node-build.js -nobuild | while read agencyid
+node /usr/local/interchange/node-build.js -nobuild=true | while read agencyid
 do
   echo "Starting TheTransitClock for Agency ${agencyid}"
   export APIKEY=$(AGENCYID="${agencyid}" . get_api_key.sh)
   export JAVA_OPTS="-Dtransitclock.apiKey=${APIKEY} -Dtransitclock.configFiles=$(node /usr/local/interchange/lib/GetPropertiesFile.js -id="${agencyid}" -interchangedir=/usr/local/interchange/ic/)"
   AGENCYID=$agencyid APIKEY=$APIKEY JAVA_OPTS=$JAVA_OPTS nohup java \
     -Xss12m \
+    -Dtransitclock.apiKey=$APIKEY \
+    -Dtransitclock.core.agencyId=$agencyid \
     -Duser.timezone=EST \
     -Dtransitclock.logging.dir=/usr/local/transitclock/logs/ \
     -jar /usr/local/transitclock/Core.jar -configRev 0 > "/usr/local/transitclock/logs/output_agency${agencyid}.txt" &

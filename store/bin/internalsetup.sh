@@ -17,7 +17,7 @@ rm -rf node_modules/
 echo "Installing fresh NPM dependencies"
 npm install
 echo "Building agencies using buildscript and database host" $POSTGRES_PORT_5432_TCP_ADDR
-node node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}"
+node node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}:${POSTGRES_PORT_5432_TCP_PORT}"
 echo "Finished building agencies"
 sleep 1
 export TRANSITCLOCK_ALLPROPERTIES=$(node /usr/local/interchange/lib/GetConfigs.js -interchangedir=/usr/local/interchange/ic/)

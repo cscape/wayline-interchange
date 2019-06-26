@@ -15,12 +15,11 @@ java \
   -Dtransitclock.db.dbType=postgresql \
   -Dhibernate.connection.username="${PGUSERNAME}" \
   -Dhibernate.connection.password="${PGPASSWORD}" \
-  -cp usr/local/transitclock/Core.jar \
-  org.transitclock.db.webstructs.WebAgency \
+  -jar /usr/local/transitclock/CreateWebAgency.jar \
   "${AGENCYID}" \
   127.0.0.1 \
   "TC_AGENCY_${AGENCYID}" \
   postgresql \
-  "${POSTGRES_PORT_5432_TCP_ADDR}" \
+  "${POSTGRES_PORT_5432_TCP_ADDR}:${POSTGRES_PORT_5432_TCP_PORT}" \
   "${PGUSERNAME}" \
   "${PGPASSWORD}"
