@@ -3,11 +3,11 @@
 # There's a minimum of 1 agency and recommended maximum of 99
 # (beyond 99 there may be issues although it's very unlikely)
 
-[[agency]]
-id = 1
-name = 'Massachusetts Bay Transportation Authority'
-realtimeUrl = 'https://cdn.mbta.com/realtime/VehiclePositions.pb'
-gtfsUrl = 'https://cdn.mbta.com/MBTA_GTFS.zip'
+#[[agency]]
+#id = 1
+#name = 'Massachusetts Bay Transportation Authority'
+#realtimeUrl = 'https://cdn.mbta.com/realtime/VehiclePositions.pb'
+#gtfsUrl = 'https://cdn.mbta.com/MBTA_GTFS.zip'
 
 [[agency]]
 id = 2
