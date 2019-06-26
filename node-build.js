@@ -5,10 +5,16 @@ const toml = require('toml')
 
 const { doEverything, agencyIdFromNumber } = require('./lib/agency.properties')
 
-let dbUser = 'TCUser'
-let dbPass = 'sample_interchangePassword145'
-let dbHost = '127.0.0.1'
+// Setting defaults,
+// PLEASE explicitly pass the -user, -pass, and -host parameters when calling this script!
+let dbUser = process.env.PGPUSERNAME || 'TCUser'
+let dbPass = process.env.PGPASSWORD || 'sample_interchangePassword145'
+let dbHost = '127.0.0.1:5432'
 let noBuild = false
+
+if (process.env.POSTGRES_PORT_5432_TCP_ADDR != null && process.env.POSTGRES_PORT_5432_TCP_PORT != null) {
+  dbHost = `${process.env.POSTGRES_PORT_5432_TCP_ADDR}:${process.env.POSTGRES_PORT_5432_TCP_PORT}`
+}
 
 process.argv.forEach(a => {
   if (a.indexOf('-') !== 0) return
@@ -20,20 +26,26 @@ process.argv.forEach(a => {
     case 'host': dbHost = val; break;
     case 'nobuild': noBuild = Boolean(val); break;
   }
+
+  // Prevent silent failure
+  if (['user', 'pass', 'host'].indexOf(key) === -1) {
+    throw new Error('FATAL! You need to specify the DB Username, DB Password, and DB Host when calling this script.')
+    process.exit(3)
+  }
 })
 
 const tomlConfig = fs.readFileSync(path.resolve(__dirname, 'config.toml'), 'utf8')
 const data = toml.parse(tomlConfig)
 
 if (noBuild === false) {
-  const files = data.agency.map((agency, i) => {
+  // Array of filepaths with the TCxx.properties per agency
+  data.agency.map((agency, i) => {
     doEverything(i !== 0, agency.id, agency.realtimeUrl, dbUser, dbPass, dbHost)
-  }).join('\n')
+  })
 }
 
+// Array of agency IDs
 const agencies = data.agency.map(agency => {
-  const content = `${agency.name}\n${dbUser}\n${dbPass}\n${dbHost}`
-  fs.writeFileSync(path.resolve(__dirname, `./ic/agencies/${agency.id}`), content, 'utf8')
   return agencyIdFromNumber(agency.id)
 }).join('\n')
 
