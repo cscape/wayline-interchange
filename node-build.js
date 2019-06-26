@@ -17,12 +17,6 @@ process.argv.forEach(a => {
   const key = String(a.split('=')[0].replace(/-/gm, '')).toLowerCase().trim()
   const val = String(a.split('=')[1]).trim()
 
-  // Prevent silent failure
-  if (['user', 'pass', 'host'].indexOf(key) === -1) {
-    throw new Error('FATAL! You need to specify the DB Username, DB Password, and DB Host when calling this script.')
-    process.exit(3)
-  }
-
   switch (key) {
     case 'user': dbUser = val; break;
     case 'pass': dbPass = val; break;
