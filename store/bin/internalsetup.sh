@@ -9,6 +9,7 @@ set -u
 cd /usr/local/interchange
 echo "Clearing node_modules"
 rm -rf node_modules/
+rm -rf ic/
 echo "Installing fresh NPM dependencies"
 npm install
 echo "Building agencies using buildscript and database host" $POSTGRES_PORT_5432_TCP_ADDR
