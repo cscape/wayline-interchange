@@ -4,6 +4,8 @@ export PGUSERNAME=TransitClockUser
 docker stop icdb && docker stop icserver
 docker rm icdb && docker rm icserver
 
+docker rmi transitclock-server
+
 # Builds image from Dockerfile
 docker build --no-cache -t transitclock-server .
 
