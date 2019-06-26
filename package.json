@@ -15,7 +15,5 @@
     "url": "https://github.com/cscape/wayline-interchange/issues"
   },
   "homepage": "https://github.com/cscape/wayline-interchange#readme",
-  "dependencies": {
-    "toml": "^3.0.0"
-  }
+  "dependencies": {}
 }

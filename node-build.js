@@ -18,10 +18,10 @@ process.argv.forEach(a => {
   const val = String(a.split('=')[1]).trim()
 
   switch (key) {
-    case 'user': dbUser = val; break;
-    case 'pass': dbPass = val; break;
-    case 'host': dbHost = val; break;
-    case 'nobuild': noBuild = Boolean(val); break;
+    case 'user': dbUser = val; break
+    case 'pass': dbPass = val; break
+    case 'host': dbHost = val; break
+    case 'nobuild': noBuild = Boolean(val); break
   }
 })
 
