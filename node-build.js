@@ -40,5 +40,6 @@ const agencies = data.agency.map(agency => {
   return agencyIdFromNumber(agency.id)
 }).join('\n')
 
-console.log(String(agencies))
+// console.log(String(agencies))
+console.log(dbUser, dbPass,dbHost,noBuild)
 process.exit(0)
