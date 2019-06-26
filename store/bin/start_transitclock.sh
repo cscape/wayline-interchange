@@ -23,7 +23,7 @@ rmiregistry &
 #echo "Java environment options set as: ${JAVA_OPTS}"
 
 echo "Fetching agencies"
-node /usr/local/interchange/node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}:${POSTGRES_PORT_5432_TCP_PORT}" -nobuild=true | while read agencyid
+node /usr/local/interchange/node-build.js -user="${PGUSERNAME}" -pass="${PGPASSWORD}" -host="${POSTGRES_PORT_5432_TCP_ADDR}" -nobuild=true | while read agencyid
 do
   echo "Starting TheTransitClock for Agency ${agencyid}"
   export APIKEY=$(AGENCYID="${agencyid}" . get_api_key.sh)
