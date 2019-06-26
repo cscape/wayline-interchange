@@ -1,0 +1,6 @@
+{
+  "description": "TOML parser for Node.js (parses TOML spec v0.4.0)",
+  "main": "index.js",
+  "name": "toml",
+  "version": "3.0.0"
+}

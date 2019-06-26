@@ -1,7 +1,7 @@
 require('./lib/ic-precheck')()
 const fs = require('fs')
 const path = require('path')
-const toml = require('toml')
+const toml = require('./lib/toml/index')
 
 const { doEverything, agencyIdFromNumber } = require('./lib/agency.properties')
 
