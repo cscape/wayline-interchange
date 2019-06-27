@@ -7,10 +7,12 @@ echo 'INTERCHANGE DOCKER: Creating API key'
 java \
   -cp /usr/local/transitclock/Core.jar \
   org.transitclock.applications.CreateAPIKey \
-  -c $TRANSITCLOCK_AGENCY_PROPERTIES_FILE \
+  -c "${TRANSITCLOCK_AGENCY_PROPERTIES_FILE}" \
   -d "Connector" \
   -e "alex@example.com" \
   -n "Application" \
   -p "123456" \
   -u "https://wayline.co"
 
+echo "Appending API key to config for agency ${AGENCYID}"
+node /usr/local/interchange/lib/AppendKeyToConfig.js -id="${AGENCYID}" -apikey=$(AGENCYID=$AGENCYID . get_api_key.sh)
