@@ -4,6 +4,8 @@ echo 'THETRANSITCLOCK DOCKER: Start TheTransitClock.'
 echo "Initiating RMI Registry"
 rmiregistry &
 
+export CATALINA_OPTS="$CATALINA_OPTS -Dtransitclock.configFiles=$(node /usr/local/interchange/lib/GetPropertiesFile.js -interchangedir=/usr/local/interchange/ic/)"
+
 echo "Starting Tomcat"
 /usr/local/tomcat/bin/startup.sh
 
