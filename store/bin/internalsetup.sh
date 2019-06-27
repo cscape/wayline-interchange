@@ -33,11 +33,11 @@ do
   echo "Importing GTFS files $FOR_TEXT"
   AGENCYID="${p}" AGENCY_GTFS_URL="${AGENCY_GTFS_URL}" TRANSITCLOCK_AGENCY_PROPERTIES_FILE="${TRANSITCLOCK_AGENCY_PROPERTIES_FILE}" . import_gtfs.sh
 
-  echo "Creating Web Agency $FOR_TEXT"
-  AGENCYID="${p}" . create_webagency.sh
-
   echo "Creating API key $FOR_TEXT"
   TRANSITCLOCK_AGENCY_PROPERTIES_FILE="${TRANSITCLOCK_AGENCY_PROPERTIES_FILE}" . create_api_key.sh
+
+  echo "Creating Web Agency $FOR_TEXT"
+  AGENCYID="${p}" . create_webagency.sh
 
   echo "Finished building $FOR_TEXT"
 done
