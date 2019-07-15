@@ -53,7 +53,16 @@ const TCPropertiesList = ConfigData.agency.map((agency, i) => {
   }
 })
 
-TCPropertiesList.forEach(agencyObj => {
+let APIKeyForWEB = null
+
+const BasicEnv = {
+  PGUSERNAME: dbUser,
+  POSTGRES_PORT_5432_TCP_ADDR: dbHost,
+  POSTGRES_PORT_5432_TCP_PORT: dbPort,
+  PGPASSWORD: dbPass
+}
+
+TCPropertiesList.forEach((agencyObj, i) => {
   const basicEnv = {
     PGUSERNAME: dbUser,
     POSTGRES_PORT_5432_TCP_ADDR: dbHost,
@@ -81,4 +90,30 @@ TCPropertiesList.forEach(agencyObj => {
     const rslt = ChildProcess.execSync(cmd, { env: basicEnv })
     console.log(rslt)
   })(Seq3) // just a single command, not array
+
+  ;(() => {
+    // Generates API key
+    if (i !== 0) return
+    const rslt = ChildProcess.execSync(Commands.GetSingleAPIKey(agencyObj.id, dbUser, dbHost, dbPort), { env: basicEnv })
+    const onlyApiKey = rslt.replace(/[^A-Za-z0-9]/gm, '')
+    APIKeyForWEB = onlyApiKey
+    doEverything(false, agencyObj.id, agencyObj.gtfsrt, dbUser, dbPass, dbHost, agencyObj.apikey)
+  })()
 })
+
+const allConfigFiles = TCPropertiesList.reduce((prev, cur, i) => (i === 0 ? '' : prev + ';') + cur.path, '')
+
+console.log(ChildProcess.execSync(Commands.InitRMI()))
+console.log(ChildProcess.execSync(Commands.PutAPIKeyInEnv(APIKeyForWEB)))
+console.log(ChildProcess.execSync(Commands.ExportAPIKey(APIKeyForWEB)))
+console.log(ChildProcess.execSync(Commands.ExportConfigFiles(allConfigFiles)))
+
+// START CORES
+TCPropertiesList.forEach((agencyObj, i) => {
+  // Generates API key
+  const rslt = ChildProcess.execSync(Commands.StartCore(agencyObj.path, i !== 0), { env: BasicEnv })
+  console.log(rslt)
+})
+
+console.log(ChildProcess.execSync(Commands.StartTomcat()))
+console.log('Finished launching')
