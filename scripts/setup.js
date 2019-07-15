@@ -58,7 +58,7 @@ TCPropertiesList.forEach(agencyObj => {
     PGUSERNAME: dbUser,
     POSTGRES_PORT_5432_TCP_ADDR: dbHost,
     POSTGRES_PORT_5432_TCP_PORT: dbPort,
-    PGPASSWORD: process.env.PGPASSWORD,
+    PGPASSWORD: dbPass,
     AGENCYID: agencyObj.id
   }
   // STEP 1: Create tables
@@ -76,9 +76,9 @@ TCPropertiesList.forEach(agencyObj => {
   })
 
   // STEP 3: Create Web Agency
-  const Seq3 = Commands.ImportGTFSForSingleAgency(agencyObj.id, agencyObj.path, agencyObj.gtfs, dbUser, dbHost, dbPort)
-  Seq3.forEach(cmd => {
+  const Seq3 = Commands.CreateSingleWebAgency(agencyObj.id, dbUser, dbHost, dbPort, dbPass)
+  ;(cmd => {
     const rslt = ChildProcess.execSync(cmd, { env: basicEnv })
     console.log(rslt)
-  })
+  })(Seq3) // just a single command, not array
 })
