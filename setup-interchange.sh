@@ -31,18 +31,7 @@ docker run \
   transitclock-server \
   check_db_up.sh
 
-echo "Running internal container setup"
-# Internal (container-scope) setup
-docker run \
-  --name icserver \
-  --rm \
-  --link icdb:postgres \
-  -e PGPASSWORD=$PGPASSWORD \
-  -e PGUSERNAME=$PGUSERNAME \
-  transitclock-server \
-  internalsetup.sh
-
-echo "Starting TransitClock container"
+echo "Bootstrapping TransitClock container"
 # CONTAINER: 	icserver
 # DESCRIPTION:	Start the server
 docker run \
@@ -53,4 +42,4 @@ docker run \
   -e PGUSERNAME=$PGUSERNAME \
   -p 3020:8080 \
   transitclock-server \
-  start_transitclock.sh
+  internalsetup.sh
